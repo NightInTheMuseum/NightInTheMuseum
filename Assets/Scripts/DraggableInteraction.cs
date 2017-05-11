@@ -11,6 +11,9 @@ public class DraggableInteraction : MonoBehaviour {
 
 	public Camera targetCamera;
 
+	[SerializeField]
+	private PlayerTurnControllerScript turnScript;
+
     private Rigidbody2D thisRigidbody;
 
     private bool dragging = false;
@@ -21,8 +24,10 @@ public class DraggableInteraction : MonoBehaviour {
     }
 
     void OnMouseDown() {
-        distance = Vector3.Distance(transform.position, targetCamera.transform.position);
-        dragging = true;
+		if (turnScript.CanMoveObject(transform) && turnScript.isGhostTurn) {
+			distance = Vector3.Distance(transform.position, targetCamera.transform.position);
+			dragging = true;
+		}
     }
 
     void OnMouseUp() {

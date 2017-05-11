@@ -152,6 +152,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1900809174}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -208,6 +213,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 322013778}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -260,6 +270,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 322013778}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -398,6 +413,7 @@ MonoBehaviour:
   roomNumber: 2
   fadeDuration: 0.5
   isExit: 0
+  isEndTurn: 0
   blackScreen: {fileID: 887935902}
   highlightedSprite: {fileID: 21300000, guid: c6d86dbac41a25c4baf7dceaadb4d691, type: 3}
   uiPrefabCanvas: {fileID: 1019917457}
@@ -751,6 +767,35 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1370540367081524, guid: 32c80293ef982eb41a5fdb95c3470bc9, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114137173972736972, guid: 32c80293ef982eb41a5fdb95c3470bc9,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 114167618717303290, guid: 32c80293ef982eb41a5fdb95c3470bc9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1322785941}
+    - target: {fileID: 114167618717303290, guid: 32c80293ef982eb41a5fdb95c3470bc9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwapTurns
+      objectReference: {fileID: 0}
+    - target: {fileID: 114167618717303290, guid: 32c80293ef982eb41a5fdb95c3470bc9,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429497179908080, guid: 32c80293ef982eb41a5fdb95c3470bc9, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 223443872482944430, guid: 32c80293ef982eb41a5fdb95c3470bc9,
+        type: 2}
+      propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -902,6 +947,7 @@ MonoBehaviour:
   roomNumber: 1
   fadeDuration: 0.5
   isExit: 0
+  isEndTurn: 0
   blackScreen: {fileID: 887935902}
   highlightedSprite: {fileID: 21300000, guid: 3b051cb18a1cfa64db3a912580f23231, type: 3}
   uiPrefabCanvas: {fileID: 1019917457}
@@ -1394,6 +1440,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1900809174}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -1523,6 +1574,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1527512804}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -1858,6 +1914,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 322013778}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -1866,6 +1927,12 @@ Transform:
   m_PrefabParentObject: {fileID: 4132468496284866, guid: cecf1e08352a2cf468baabfb0be0bb10,
     type: 2}
   m_PrefabInternal: {fileID: 549816029}
+--- !u!114 &552425231 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114137173972736972, guid: 32c80293ef982eb41a5fdb95c3470bc9,
+    type: 2}
+  m_PrefabInternal: {fileID: 172182391}
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1001 &564255991
 Prefab:
   m_ObjectHideFlags: 0
@@ -1914,6 +1981,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 322013778}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -2091,6 +2163,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 322013778}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -2500,6 +2577,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1900809174}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -2721,6 +2803,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1527512804}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -2772,6 +2859,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1900809174}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -3294,6 +3386,7 @@ MonoBehaviour:
   roomNumber: 3
   fadeDuration: 0.5
   isExit: 1
+  isEndTurn: 0
   blackScreen: {fileID: 887935902}
   highlightedSprite: {fileID: 21300000, guid: 99f574210bb042c4391b4a394e0b7f5d, type: 3}
   uiPrefabCanvas: {fileID: 1019917457}
@@ -3347,6 +3440,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1527512804}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -3360,7 +3458,7 @@ GameObject:
   - component: {fileID: 1012796272}
   - component: {fileID: 1012796271}
   - component: {fileID: 1012796270}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3384,7 +3482,7 @@ MonoBehaviour:
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_ForceModuleActive: 1
 --- !u!114 &1012796271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3522,6 +3620,7 @@ MonoBehaviour:
   roomNumber: 2
   fadeDuration: 0.5
   isExit: 1
+  isEndTurn: 0
   blackScreen: {fileID: 887935902}
   highlightedSprite: {fileID: 21300000, guid: 99f574210bb042c4391b4a394e0b7f5d, type: 3}
   uiPrefabCanvas: {fileID: 1019917457}
@@ -3593,6 +3692,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1527512804}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -3764,6 +3868,8 @@ MonoBehaviour:
   Dialogs_2: []
   Dialogs_3: []
   Notifier: {fileID: 0}
+  turnScript: {fileID: 1322785941}
+  displayText: {fileID: 552425231}
 --- !u!4 &1151539764
 Transform:
   m_ObjectHideFlags: 0
@@ -3910,6 +4016,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 322013778}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -4010,6 +4121,7 @@ MonoBehaviour:
   roomNumber: 3
   fadeDuration: 0.5
   isExit: 0
+  isEndTurn: 0
   blackScreen: {fileID: 887935902}
   highlightedSprite: {fileID: 21300000, guid: ff5bf81257a702a4c8390cb3ff38ae33, type: 3}
   uiPrefabCanvas: {fileID: 1019917457}
@@ -4216,7 +4328,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGhostTurn: 1
-  turnsTakenPlace: 1
+  turnsTakenPlace: 0
+  movedObjects: []
+  numDetectives: 3
+  blackScreen: {fileID: 887935902}
 --- !u!4 &1322785942
 Transform:
   m_ObjectHideFlags: 0
@@ -4796,6 +4911,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1900809174}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -5182,6 +5302,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 322013778}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -5238,6 +5363,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1900809174}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -5405,6 +5535,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1527512804}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -5644,6 +5779,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1900809174}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -5885,6 +6025,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1527512804}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0
@@ -6070,6 +6215,7 @@ MonoBehaviour:
   roomNumber: 1
   fadeDuration: 0.5
   isExit: 1
+  isEndTurn: 0
   blackScreen: {fileID: 887935902}
   highlightedSprite: {fileID: 21300000, guid: 99f574210bb042c4391b4a394e0b7f5d, type: 3}
   uiPrefabCanvas: {fileID: 1019917457}
@@ -6158,6 +6304,11 @@ Prefab:
       propertyPath: targetCamera
       value: 
       objectReference: {fileID: 1527512804}
+    - target: {fileID: 114004064861286092, guid: cecf1e08352a2cf468baabfb0be0bb10,
+        type: 2}
+      propertyPath: turnScript
+      value: 
+      objectReference: {fileID: 1322785941}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cecf1e08352a2cf468baabfb0be0bb10, type: 2}
   m_IsPrefabParent: 0

@@ -7,7 +7,6 @@ using DG.Tweening;
 //detect which scene
 public class UIManager : MonoBehaviour
 {
-
     [SerializeField]
     Image pausePnl, DialogPnl, deducePnl;
     [SerializeField]
@@ -16,11 +15,15 @@ public class UIManager : MonoBehaviour
     List<string> Dialogs, Dialogs_2, Dialogs_3;
     [SerializeField]
     GameObject Notifier;
+	[SerializeField]
+	PlayerTurnControllerScript turnScript;
+	[SerializeField]
+	Text displayText;
+
 
     private bool paused, deduce;
 
 	private int menuState = 0;
-
 
 	private static UIManager _instance = null;
 
@@ -55,7 +58,15 @@ public class UIManager : MonoBehaviour
 
 	// Update is called once per frame
 	void Update () {
+		if (turnScript.isGhostTurn) {
+			displayText.text = "Remaining movable objects: " + (5 - turnScript.movedObjects.Count).ToString ();
+		} else {
+			displayText.text = "Remaining time: " + (Mathf.RoundToInt(turnScript.timer)).ToString() + " seconds";
 
+			if (turnScript.timer <= 0) {
+				turnScript.SwapTurns ();
+			}
+		}
 	}
 
 	public void pause_btn () {//in-game pause button 

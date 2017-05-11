@@ -15,6 +15,7 @@ public class RoomTransitionScript : MonoBehaviour {
 	public int roomNumber;
 	public float fadeDuration;
 	public bool isExit;
+	public bool isEndTurn;
 
 	public static bool isChosen;
 
@@ -33,8 +34,8 @@ public class RoomTransitionScript : MonoBehaviour {
 	static string CAMERA = "Camera";
 
 	// Screen fading is done by adjusting opacity of the black screen
-	static Color WHITE_OPAQUE = new Color(1, 1, 1, 1);
-	static Color WHITE_TRANSPARENT = new Color (1, 1, 1, 0);
+	public static Color WHITE_OPAQUE = new Color(1, 1, 1, 1);
+	public static Color WHITE_TRANSPARENT = new Color (1, 1, 1, 0);
 
 	void Start () {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
@@ -68,7 +69,6 @@ public class RoomTransitionScript : MonoBehaviour {
 		*/
 		if (isChosen) {
 			StartCoroutine (FadeScreen (WHITE_TRANSPARENT, WHITE_OPAQUE, fadeDuration));
-			turnTracker.SwapTurns ();		// notifies the turn tracker of the next player's turn
 			EnableRoomCamera ();
 			SetUICameraToRoomCamera ();
 			StartCoroutine (FadeScreen (WHITE_OPAQUE, WHITE_TRANSPARENT, fadeDuration));
@@ -86,6 +86,9 @@ public class RoomTransitionScript : MonoBehaviour {
 			StartCoroutine (FadeScreen (WHITE_TRANSPARENT, WHITE_OPAQUE, fadeDuration));
 			DisableRoomCamera ();
 			SetUICameraToMainCamera ();
+			if (isEndTurn) {
+				turnTracker.SwapTurns ();
+			}
 			StartCoroutine (FadeScreen (WHITE_OPAQUE, WHITE_TRANSPARENT, fadeDuration));
 		}
 		isChosen = false;
@@ -94,7 +97,7 @@ public class RoomTransitionScript : MonoBehaviour {
 	/* ===== UTILITY/COMPUTATION FUNCTIONS DEFINITIONS  ===== */
 
 	// Performs the fade-screen effect using a coroutine.
-	IEnumerator FadeScreen (Color startColor, Color endColor, float duration) {
+	public IEnumerator FadeScreen (Color startColor, Color endColor, float duration) {
 		float start = Time.time;
 		float elapsed = 0;
 		while (elapsed < duration) {
