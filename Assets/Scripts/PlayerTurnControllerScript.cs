@@ -27,6 +27,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	public Sprite ghostActive;
 	public Sprite detectiveNormal;
 	public Sprite detectiveActive;
+	public Canvas uiPrefabCanvas;
 
 	public int answer = 2;		// for storing the killer solution
 	public bool hasCorrectGuess;
@@ -110,6 +111,16 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			UIManager.Instance.deduce_btn();
 			GameObject.Find ("back_btn").SetActive (false);
 		}
+		Camera[] allCameras = Camera.allCameras;
+		print (allCameras);
+		for (int i = 0; i < allCameras.Length; i++) {
+			if (allCameras [i] != Camera.main) {
+				allCameras [i].enabled = false;
+			}
+		}
+		NotificationManager.Instance.targetCamera = Camera.main;
+		uiPrefabCanvas.worldCamera = Camera.main;
+		Camera.main.enabled = true;
 		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_OPAQUE, RoomTransitionScript.WHITE_TRANSPARENT, 0.5f));
 	}
 
