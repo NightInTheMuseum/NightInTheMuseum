@@ -21,6 +21,12 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	public int numDetectives;
 	public Image blackScreen;
 	public float timer;
+	public Image ghost;
+	public Image[] detectiveIcons;
+	public Sprite ghostNormal;
+	public Sprite ghostActive;
+	public Sprite detectiveNormal;
+	public Sprite detectiveActive;
 
 	public int answer = 2;		// for storing the killer solution
 	public bool hasCorrectGuess;
@@ -37,13 +43,20 @@ public class PlayerTurnControllerScript : MonoBehaviour {
         if (_levelHandler != null)
         {
             numDetectives = _levelHandler.returnDect() - 1;
+			_levelHandler.initializeDetectives();
+
             Destroy(_levelHandler.gameObject);
         }
     }
+
     void Start () {
 		movedObjects = new List<Transform>();
 		totalPermissibleTurns = (numDetectives + 1) * MAX_NUM_TURNS_PER_PLAYER;
 		timer = TIME_LIMIT;
+		ghost.sprite = ghostActive;
+		for (int i = 2; i >= numDetectives; i--) {
+			detectiveIcons [i].enabled = false;
+		}
 	}
 
 	void Update () {
@@ -63,14 +76,23 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 
 	// Changes the turn to the other player.
 	public void SwapTurns () {
+		if (turnId > 0) {
+			PlayerPolice p = _levelHandler.detectives [turnId - 1];
+			p.TurnsTaken += 1;
+			p.TimeLeft = timer;
+			print ("Detective " + turnId.ToString() + ": Turns taken = " + p.TurnsTaken.ToString() + ", Time left = " + p.TimeLeft.ToString());
+			detectiveIcons [turnId - 1].sprite = detectiveNormal;
+		}
 		turnsTakenPlace += 1;
 		turnId = turnsTakenPlace % (numDetectives + 1);
-		print (turnId);
 		isGhostTurn = (turnId == 0);
 
 		if (isGhostTurn) {
 			ResetObjectList ();
+			ghost.sprite = ghostActive;
 		} else {
+			ghost.sprite = ghostNormal;
+			detectiveIcons [turnId - 1].sprite = detectiveActive;
 			timer = TIME_LIMIT;
 		}
 
@@ -81,6 +103,10 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			UIManager.Instance.displayText.enabled = false;
 			GameObject.Find ("Scroll View").SetActive (false);
 			GameObject.Find ("exit_btn").SetActive (false);
+			ghost.enabled = false;
+			for (int i = 0; i < numDetectives; i++) {
+				detectiveIcons [i].enabled = false;
+			}
 			UIManager.Instance.deduce_btn();
 			GameObject.Find ("back_btn").SetActive (false);
 		}
@@ -145,7 +171,6 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	 */
 	public bool isGameEnding() {
 		allTurnsUsedUp = turnsTakenPlace >= totalPermissibleTurns;
-		print (allTurnsUsedUp);
 		return allTurnsUsedUp;
 	}
 
