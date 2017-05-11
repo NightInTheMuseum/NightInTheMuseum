@@ -9,16 +9,16 @@ public class MainMenuScript : MonoBehaviour {
     Button btn_start, btn_quit, btn_play, btn_forward, btn_back;
 
     [SerializeField]
-    Image _cutsceneHolder, _playerHolder;
+    Image pnl_C1, pnl_C2, pnl_C3;
 
     [SerializeField]
-    Image pnl_MainMenu, pnl_Fader, pnl_Cutscene, pnl_Players, pnl_Instruct;
+    Image pnl_MainMenu, pnl_Fader, pnl_Cutscene, pnl_Players;
 
     [SerializeField]
     Text numOfDetectives;
 
     [SerializeField]
-    List<Sprite> cutscenes, playercount;
+    List<Sprite> cutscenes;
 
     [SerializeField]
     LevelLoadHandler _levelHandler;
@@ -29,7 +29,6 @@ public class MainMenuScript : MonoBehaviour {
     void Awake()
     {
         //pnl_MainMenu.gameObject.SetActive (false);
-        currentSelection = 2;
     }
 
     // Use this for initialization
@@ -47,7 +46,6 @@ public class MainMenuScript : MonoBehaviour {
 
     public void LoadProperLevel(string s)
     {
-        _levelHandler.setDect(currentSelection);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(ShrinkLevelSelectPanel());
         sequence.AppendCallback(() =>
@@ -70,30 +68,21 @@ public class MainMenuScript : MonoBehaviour {
         Application.Quit();
     }
 
-    public void proceedPlayersSelect()
-    {
-        pnl_MainMenu.gameObject.SetActive(false);
-        pnl_Players.gameObject.SetActive(true);
-
-    }
-
     public void proceedCutScene()
     {
         pnl_Players.gameObject.SetActive(false);
         pnl_Cutscene.gameObject.SetActive(true);
-        _cutsceneHolder.gameObject.SetActive(true);
+        pnl_C1.gameObject.SetActive(true);
         btn_play.gameObject.SetActive(false);
         btn_back.gameObject.SetActive(false);
         btn_forward.gameObject.SetActive(true);
 
     }
 
-    
-    public void proceedInstructionst()
+    public void proceedPlayersSelect()
     {
-        pnl_Players.gameObject.SetActive(false);
-        pnl_Cutscene.gameObject.SetActive(false);
-        pnl_Instruct.gameObject.SetActive(true);
+        pnl_MainMenu.gameObject.SetActive(false);
+        pnl_Players.gameObject.SetActive(true);
 
     }
 
@@ -129,7 +118,7 @@ public class MainMenuScript : MonoBehaviour {
 
     public void refreshCutscene(int i)
     {
-        _cutsceneHolder.gameObject.GetComponent<Image>().sprite = cutscenes[currentCutscene];
+        pnl_C1.gameObject.GetComponent<Image>().sprite = cutscenes[currentCutscene];
     }
 
     public void updatePlayerCountForward()
@@ -140,7 +129,6 @@ public class MainMenuScript : MonoBehaviour {
             currentSelection = 2;
         }
         _levelHandler.setDect(currentSelection);
-        refreshPlayerCount(currentSelection);
     }
 
 
@@ -153,12 +141,6 @@ public class MainMenuScript : MonoBehaviour {
             currentSelection = 4;
         }
         _levelHandler.setDect(currentSelection);
-        refreshPlayerCount(currentSelection);
-    }
-
-    public void refreshPlayerCount(int i)
-    {
-        _playerHolder.gameObject.GetComponent<Image>().sprite = playercount[currentSelection-2];
     }
 
 }
