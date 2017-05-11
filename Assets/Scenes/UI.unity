@@ -4332,6 +4332,7 @@ MonoBehaviour:
   movedObjects: []
   numDetectives: 3
   blackScreen: {fileID: 887935902}
+  timer: 0
 --- !u!4 &1322785942
 Transform:
   m_ObjectHideFlags: 0

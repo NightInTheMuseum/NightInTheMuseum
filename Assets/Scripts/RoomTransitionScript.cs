@@ -41,6 +41,7 @@ public class RoomTransitionScript : MonoBehaviour {
 	void Start () {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		normalSprite = spriteRenderer.sprite;
+		isPaused = false;
 	}
 
 	void OnMouseOver () {

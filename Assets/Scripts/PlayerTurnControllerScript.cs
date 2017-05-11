@@ -34,6 +34,15 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	}
 
 	void Update () {
+		if (Input.GetKeyDown (KeyCode.P)) {
+			if (!RoomTransitionScript.isPaused) {
+				UIManager.Instance.pause_btn ();
+			}
+		} else if (Input.GetKeyDown (KeyCode.Escape)) {
+			if (RoomTransitionScript.isPaused) {
+				UIManager.Instance.pause_btn ();
+			}
+		}
 		if (!isGhostTurn) {
 			timer -= Time.deltaTime;
 		}
@@ -53,6 +62,10 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 		}
 
 		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_TRANSPARENT, RoomTransitionScript.WHITE_OPAQUE, 0.5f));
+		if (isGameEnding ()) {
+			// set deduction screen to be active
+			RoomTransitionScript.isPaused = true;		// quickhack to disable all room transitions at this stage
+		}
 		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_OPAQUE, RoomTransitionScript.WHITE_TRANSPARENT, 0.5f));
 	}
 
@@ -104,7 +117,6 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			return false;
 		}
 	}
-
 		
 	/*
 	 * Checks if the game is ending. By this, we mean to say
@@ -115,6 +127,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	 */
 	bool isGameEnding() {
 		allTurnsUsedUp = turnsTakenPlace >= totalPermissibleTurns;
+		print (allTurnsUsedUp);
 		return allTurnsUsedUp;
 	}
 

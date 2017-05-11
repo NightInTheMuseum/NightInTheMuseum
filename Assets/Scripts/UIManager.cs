@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
 			paused = false;
 			pausePnl.gameObject.SetActive (false);
             screenUI.gameObject.SetActive(true);
+			RoomTransitionScript.isPaused = false;
         } else {
             screenUI.gameObject.SetActive(false);
             pausePnl.gameObject.SetActive (true);
@@ -88,6 +89,7 @@ public class UIManager : MonoBehaviour
 
 			Time.timeScale = 0.0f;
 			paused = true;
+			RoomTransitionScript.isPaused = true;
 		}				
 	}
 
@@ -99,7 +101,7 @@ public class UIManager : MonoBehaviour
 
  
     public void deduce_btn() {
-        /*if (deduce)
+        if (deduce)
         {
             Sequence sequence = DOTween.Sequence();
             sequence.Append(deducePnl.rectTransform.DOLocalMoveY(-1050, 1.0f, false));
@@ -117,7 +119,7 @@ public class UIManager : MonoBehaviour
 
             Time.timeScale = 0.0f;
             deduce = true;
-        }*/
+        }
         //confirm the selection of which player is selecting
     }
     private void OnMouseDown()
