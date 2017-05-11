@@ -7,7 +7,7 @@ using DG.Tweening;
 //detect which scene
 public class UIManager : MonoBehaviour
 {
-
+    public const float TIME_LIMIT = 120;		// 2 minutes, in seconds
     [SerializeField]
     Image pausePnl, DialogPnl, deducePnl;
     [SerializeField]
@@ -16,11 +16,17 @@ public class UIManager : MonoBehaviour
     List<string> Dialogs, Dialogs_2, Dialogs_3;
     [SerializeField]
     GameObject Notifier;
+	[SerializeField]
+	PlayerTurnControllerScript turnScript;
+	[SerializeField]
+	public Text displayText;
+
+    public List<GameObject> iconsForTime;
+
 
     private bool paused, deduce;
 
-	private int menuState = 0;
-
+	private int suspect = 0;
 
 	private static UIManager _instance = null;
 
@@ -55,7 +61,16 @@ public class UIManager : MonoBehaviour
 
 	// Update is called once per frame
 	void Update () {
+		if (turnScript.isGhostTurn) {
+			displayText.text = "Remaining movable objects: " + (5 - turnScript.movedObjects.Count).ToString ();
+		} else {
+			displayText.text = "Remaining time: " + (Mathf.RoundToInt(turnScript.timer)).ToString() + " seconds";
+            setTimerIcon(turnScript.timer/ TIME_LIMIT);
 
+            if (turnScript.timer <= 0) {
+				turnScript.SwapTurns ();
+			}
+		}
 	}
 
 	public void pause_btn () {//in-game pause button 
@@ -68,6 +83,7 @@ public class UIManager : MonoBehaviour
 			paused = false;
 			pausePnl.gameObject.SetActive (false);
             screenUI.gameObject.SetActive(true);
+			RoomTransitionScript.isPaused = false;
         } else {
             screenUI.gameObject.SetActive(false);
             pausePnl.gameObject.SetActive (true);
@@ -77,9 +93,11 @@ public class UIManager : MonoBehaviour
 
 			Time.timeScale = 0.0f;
 			paused = true;
+			RoomTransitionScript.isPaused = true;
 		}				
 	}
 
+    
 	public void quit_btn () {
 		// check if in main menu or in-game
 		//loadLevel("SelectionScene_2");
@@ -88,14 +106,16 @@ public class UIManager : MonoBehaviour
 
  
     public void deduce_btn() {
-        /*if (deduce)
+        if (deduce)
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(deducePnl.rectTransform.DOLocalMoveY(-1050, 1.0f, false));
+			if (!turnScript.isGameEnding ()) {
+				Sequence sequence = DOTween.Sequence ();
+				sequence.Append (deducePnl.rectTransform.DOLocalMoveY (-1050, 1.0f, false));
 
-            Time.timeScale = 1.0f;
-            deduce = false;
-            deducePnl.gameObject.SetActive(false);
+				Time.timeScale = 1.0f;
+				deduce = false;
+				deducePnl.gameObject.SetActive (false);
+			}
         }
         else
         {
@@ -106,9 +126,34 @@ public class UIManager : MonoBehaviour
 
             Time.timeScale = 0.0f;
             deduce = true;
-        }*/
+        }
         //confirm the selection of which player is selecting
     }
+
+    public void selectSuspect(GameObject pic)
+    {
+        suspect = (int)pic.GetComponent<Profile>().getProfile();
+        Debug.Log(suspect.ToString());
+       
+    }
+
+    public void onDeduction()
+    {
+        if (suspect == turnScript.answer)
+        {
+            //Correct, can arrest suspect
+        }
+        else
+        {
+            //Wrong, you failed!
+        }
+    }
+
+    public void setTimerIcon(float time)
+    {
+        iconsForTime[0].transform.localScale = new Vector3(iconsForTime[0].transform.localScale.x, Mathf.Clamp(time, 0f, 1f), iconsForTime[0].transform.localScale.z);
+    }
+
     private void OnMouseDown()
     {
         Notifier.GetComponentInChildren<NotificationManager>().NotifyText("Looked at Profile");
