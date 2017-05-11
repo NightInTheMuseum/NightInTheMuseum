@@ -25,8 +25,8 @@ public class ObjectInteraction : MonoBehaviour {
 
     // Public Methods
 
-    public string GetFlavourText() {
-        return flavourText;
+    public void ShowFlavourText() {
+		NotificationManager.Instance.NotifyText (flavourText);
     }
 
     public Vector2 GetStartingPosition() {
@@ -42,5 +42,7 @@ public class ObjectInteraction : MonoBehaviour {
     public void InteractWithItem() {
         this.GetComponent<SpriteRenderer>().color = Color.black;
     }
+
+
 
 }

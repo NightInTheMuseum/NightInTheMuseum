@@ -5,13 +5,8 @@ using UnityEngine;
 public class PlayerTurnControllerScript : MonoBehaviour {
 
 	const int MAX_NUM_TURNS = 6;
-
-	public GameObject playerGhost;
-	public GameObject playerPolice;
-	public PlayerMovementScript ghostMovement;
-	public PlayerMovementScript policeMovement;
-	public Camera playerGhostCamera;
-	public Camera playerPoliceCamera;
+	const int MAX_MOVABLE_OBJECTS = 5;
+	const float TIME_LIMIT = 120;		// 2 minutes, in seconds
 
 	/* A turn-tracking variable.
 	 * True => ghost takes the turn, False => police takes the turn.
@@ -25,50 +20,11 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	private bool hasCorrectGuess;
 	private bool allTurnsUsedUp;
 
-	/*
-	 * At game start, the ghost is the one who takes the first turn.
-	 * Therefore, we hide the police and disable his/her camera.
-	 */
-	void Start () {
-		playerPolice.SetActive (false);
-		playerPoliceCamera.enabled = false;
-		policeMovement.canMove = false;
-	}
-
 	// Changes the turn to the other player.
 	public void SwapTurns () {
 		isGhostTurn = !isGhostTurn;
 	}
-
-	// Enables the camera for the player who is going to take the next turn.
-	public void EnableNextPlayerCamera () {
-		turnsTakenPlace += 1;
-		//print("Turns taken place: " + turnsTakenPlace.ToString());
-
-		if (isGameEnding ()) {
-			// The final turn has ended, so there is no next turn.
-		} else if (isGhostTurn) {
-			playerGhost.SetActive (true);
-			playerGhostCamera.enabled = true;
-		} else {
-			// Enable the police
-			playerPolice.SetActive (true);
-			playerPoliceCamera.enabled = true;
-		}
-	}
-
-	// Enables movement for the player who is going to take the next turn.
-	public void EnableNextPlayerMovement () {
-		if (isGameEnding ()) {
-			// The final turn has ended, so there is no next turn.
-		} else if (isGhostTurn) {
-			ghostMovement.canMove = true;
-		} else {
-			// Enable the police's movement.
-			policeMovement.canMove = true;
-		}
-	}
-
+		
 	/*
 	 * Checks if the game is ending. By this, we mean to say
 	 * whether the game should continue alternating turns between

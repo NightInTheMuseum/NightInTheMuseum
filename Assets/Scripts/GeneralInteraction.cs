@@ -44,9 +44,7 @@ public class GeneralInteraction : MonoBehaviour {
         RaycastHit2D hit;
         if (hit = Physics2D.Raycast(ray.origin, ray.direction)) {
             if (hit.collider && hit.collider.tag.Equals("Interactables")) {
-                string stringToDisplay = hit.collider.gameObject.GetComponent<ObjectInteraction>().GetFlavourText();
-                Debug.Log(stringToDisplay);
-                flavourTextDisplayBox.text = stringToDisplay;
+                hit.collider.gameObject.GetComponent<ObjectInteraction>().ShowFlavourText();
                 currentLingerTime = displayLingerTime;
             }
         }
