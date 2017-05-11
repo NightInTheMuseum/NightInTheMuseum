@@ -28,6 +28,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	public Sprite detectiveNormal;
 	public Sprite detectiveActive;
 	public Canvas uiPrefabCanvas;
+	public Text solutionText;
 
 	public int answer;		// for storing the killer solution
 
@@ -67,7 +68,10 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			}
 		}
 		if (!isGhostTurn) {
+			solutionText.enabled = false;
 			timer -= Time.deltaTime;
+		} else {
+			solutionText.enabled = true;
 		}
 	}
 
