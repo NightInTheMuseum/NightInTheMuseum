@@ -18,6 +18,7 @@ public class RoomTransitionScript : MonoBehaviour {
 	public bool isEndTurn;
 
 	public static bool isChosen;
+	public static bool isPaused;
 
 	public Image blackScreen;
 	public Sprite highlightedSprite;
@@ -43,20 +44,26 @@ public class RoomTransitionScript : MonoBehaviour {
 	}
 
 	void OnMouseOver () {
-		spriteRenderer.sprite = highlightedSprite;
+		if (!isPaused) {
+			spriteRenderer.sprite = highlightedSprite;
+		}
 	}
 
 	void OnMouseExit () {
-		spriteRenderer.sprite = normalSprite;
+		if (!isPaused) {
+			spriteRenderer.sprite = normalSprite;
+		}
 	}
 
 	void OnMouseDown () {
-		isChosen = true;
+		if (!isPaused) {
+			isChosen = true;
 
-		if (isExit) {
-			ExitRoom ();
-		} else {
-			EnterRoom ();
+			if (isExit) {
+				ExitRoom ();
+			} else {
+				EnterRoom ();
+			}
 		}
 	}
 
