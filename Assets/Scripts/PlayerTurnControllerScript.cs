@@ -22,9 +22,11 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	public Image blackScreen;
 	public float timer;
 
+	public int answer = 2;		// for storing the killer solution
+	public bool hasCorrectGuess;
+
 	private int turnId;
 	private int totalPermissibleTurns;
-	private bool hasCorrectGuess;
 	private bool allTurnsUsedUp;
     LevelLoadHandler _levelHandler;
 
@@ -76,6 +78,11 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 		if (isGameEnding ()) {
 			// set deduction screen to be active
 			RoomTransitionScript.isPaused = true;		// quickhack to disable all room transitions at this stage
+			UIManager.Instance.displayText.enabled = false;
+			GameObject.Find ("Scroll View").SetActive (false);
+			GameObject.Find ("exit_btn").SetActive (false);
+			UIManager.Instance.deduce_btn();
+			GameObject.Find ("back_btn").SetActive (false);
 		}
 		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_OPAQUE, RoomTransitionScript.WHITE_TRANSPARENT, 0.5f));
 	}
@@ -136,7 +143,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	 * 
 	 * This DOES NOT check if the player has won or lost the game.
 	 */
-	bool isGameEnding() {
+	public bool isGameEnding() {
 		allTurnsUsedUp = turnsTakenPlace >= totalPermissibleTurns;
 		print (allTurnsUsedUp);
 		return allTurnsUsedUp;
