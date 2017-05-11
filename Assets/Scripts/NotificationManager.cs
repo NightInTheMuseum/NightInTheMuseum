@@ -6,7 +6,7 @@ using DG.Tweening;
 public class NotificationManager : MonoBehaviour {
 
 	private static NotificationManager _instance = null;
-
+	public Camera targetCamera;
 
 	[SerializeField]
 	Text _messageText;
@@ -18,6 +18,11 @@ public class NotificationManager : MonoBehaviour {
 
 	[SerializeField]
 	Scrollbar _scrollbar;
+
+	// Run-time variables
+	[SerializeField]
+	private float displayLingerTime = .25f;
+	private float currentLingerTime = 0;
 
 	public static NotificationManager Instance //can call from any other class w/o reference
 	{
@@ -33,7 +38,7 @@ public class NotificationManager : MonoBehaviour {
 		}
 		_instance = this;
 		
-		
+		targetCamera = Camera.main;
 	}
 
 	// Use this for initialization
@@ -48,13 +53,28 @@ public class NotificationManager : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.A)) {
 			NotifyText("hi " + currentMessageIndex);
 		}
+
+		if (currentLingerTime <= 0) {
+			NotifyText("");
+		} else {
+			currentLingerTime -= Time.deltaTime;
+		}
+
+		Ray ray = targetCamera.ScreenPointToRay(Input.mousePosition);
+		RaycastHit2D hit;
+		if (hit = Physics2D.Raycast(ray.origin, ray.direction)) {
+			if (hit.collider && hit.collider.tag.Equals("Interactables")) {
+				hit.collider.gameObject.GetComponent<ObjectInteraction>().ShowFlavourText();
+				currentLingerTime = displayLingerTime;
+			}
+		}
 	
 	}
 
 	public void NotifyText(string s)
 	{
 
-		_messageText.text += s + "\n";
+		_messageText.text = s;
 
 		_scrollbar.value = 0;
 

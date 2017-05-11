@@ -1,17 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerTurnControllerScript : MonoBehaviour {
 
-	const int MAX_NUM_TURNS = 6;
-
-	public GameObject playerGhost;
-	public GameObject playerPolice;
-	public PlayerMovementScript ghostMovement;
-	public PlayerMovementScript policeMovement;
-	public Camera playerGhostCamera;
-	public Camera playerPoliceCamera;
+	const float TIME_LIMIT = 120;		// 2 minutes, in seconds
+	const int MAX_NUM_TURNS_PER_PLAYER = 3;
+	const int MAX_MOVABLE_OBJECTS = 5;
 
 	/* A turn-tracking variable.
 	 * True => ghost takes the turn, False => police takes the turn.
@@ -20,55 +16,159 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	 * is, therefore, made public.
 	 */
 	public bool isGhostTurn = true;
-	public int turnsTakenPlace = 1;
+	public int turnsTakenPlace;
+	public List<Transform> movedObjects;
+	public int numDetectives;
+	public Image blackScreen;
+	public float timer;
+	public Image ghost;
+	public Image[] detectiveIcons;
+	public Sprite ghostNormal;
+	public Sprite ghostActive;
+	public Sprite detectiveNormal;
+	public Sprite detectiveActive;
+	public Canvas uiPrefabCanvas;
 
-	private bool hasCorrectGuess;
+	public int answer = 2;		// for storing the killer solution
+	public bool hasCorrectGuess;
+
+	private int turnId;
+	private int totalPermissibleTurns;
 	private bool allTurnsUsedUp;
+    LevelLoadHandler _levelHandler;
 
-	/*
-	 * At game start, the ghost is the one who takes the first turn.
-	 * Therefore, we hide the police and disable his/her camera.
-	 */
-	void Start () {
-		playerPolice.SetActive (false);
-		playerPoliceCamera.enabled = false;
-		policeMovement.canMove = false;
+    private void Awake()
+    {
+        _levelHandler = FindObjectOfType<LevelLoadHandler>();
+
+        if (_levelHandler != null)
+        {
+            numDetectives = _levelHandler.returnDect() - 1;
+			_levelHandler.initializeDetectives();
+
+            Destroy(_levelHandler.gameObject);
+        }
+    }
+
+    void Start () {
+		movedObjects = new List<Transform>();
+		totalPermissibleTurns = (numDetectives + 1) * MAX_NUM_TURNS_PER_PLAYER;
+		timer = TIME_LIMIT;
+		ghost.sprite = ghostActive;
+		for (int i = 2; i >= numDetectives; i--) {
+			detectiveIcons [i].enabled = false;
+		}
+	}
+
+	void Update () {
+		if (Input.GetKeyDown (KeyCode.P)) {
+			if (!RoomTransitionScript.isPaused) {
+				UIManager.Instance.pause_btn ();
+			}
+		}
+		if (!isGhostTurn) {
+			timer -= Time.deltaTime;
+		}
 	}
 
 	// Changes the turn to the other player.
 	public void SwapTurns () {
-		isGhostTurn = !isGhostTurn;
-	}
-
-	// Enables the camera for the player who is going to take the next turn.
-	public void EnableNextPlayerCamera () {
+		if (turnId > 0) {
+			PlayerPolice p = _levelHandler.detectives [turnId - 1];
+			p.TurnsTaken += 1;
+			p.TimeLeft = timer;
+			print ("Detective " + turnId.ToString() + ": Turns taken = " + p.TurnsTaken.ToString() + ", Time left = " + p.TimeLeft.ToString());
+			detectiveIcons [turnId - 1].sprite = detectiveNormal;
+		}
 		turnsTakenPlace += 1;
-		//print("Turns taken place: " + turnsTakenPlace.ToString());
+		turnId = turnsTakenPlace % (numDetectives + 1);
+		isGhostTurn = (turnId == 0);
 
-		if (isGameEnding ()) {
-			// The final turn has ended, so there is no next turn.
-		} else if (isGhostTurn) {
-			playerGhost.SetActive (true);
-			playerGhostCamera.enabled = true;
+		if (isGhostTurn) {
+			ResetObjectList ();
+			ghost.sprite = ghostActive;
 		} else {
-			// Enable the police
-			playerPolice.SetActive (true);
-			playerPoliceCamera.enabled = true;
+			ghost.sprite = ghostNormal;
+			detectiveIcons [turnId - 1].sprite = detectiveActive;
+			timer = TIME_LIMIT;
+		}
+
+		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_TRANSPARENT, RoomTransitionScript.WHITE_OPAQUE, 0.5f));
+		if (isGameEnding ()) {
+			// set deduction screen to be active
+			RoomTransitionScript.isPaused = true;		// quickhack to disable all room transitions at this stage
+			UIManager.Instance.displayText.enabled = false;
+			GameObject.Find ("Scroll View").SetActive (false);
+			GameObject.Find ("exit_btn").SetActive (false);
+			ghost.enabled = false;
+			for (int i = 0; i < numDetectives; i++) {
+				detectiveIcons [i].enabled = false;
+			}
+			UIManager.Instance.deduce_btn();
+			GameObject.Find ("back_btn").SetActive (false);
+		}
+		Camera[] allCameras = Camera.allCameras;
+		print (allCameras);
+		for (int i = 0; i < allCameras.Length; i++) {
+			if (allCameras [i] != Camera.main) {
+				allCameras [i].enabled = false;
+			}
+		}
+		NotificationManager.Instance.targetCamera = Camera.main;
+		uiPrefabCanvas.worldCamera = Camera.main;
+		Camera.main.enabled = true;
+		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_OPAQUE, RoomTransitionScript.WHITE_TRANSPARENT, 0.5f));
+	}
+
+	public void ShowDetectiveTurn() {
+		// TODO: light up detective icon based on turnId.
+	}
+
+	// Performs the fade-screen effect using a coroutine.
+	public IEnumerator FadeScreen (Color startColor, Color endColor, float duration) {
+		float start = Time.time;
+		float elapsed = 0;
+		while (elapsed < duration) {
+			elapsed = Time.time - start;
+
+			// derive parameter t based on how much time has elapsed since start time
+			float normalizedTime = Mathf.Clamp (elapsed / duration, 0, 1);
+
+			// perform the fading
+			blackScreen.color = Color.Lerp (startColor, endColor, normalizedTime);
+
+			// wait for next frame
+			yield return null;
 		}
 	}
 
-	// Enables movement for the player who is going to take the next turn.
-	public void EnableNextPlayerMovement () {
-		if (isGameEnding ()) {
-			// The final turn has ended, so there is no next turn.
-		} else if (isGhostTurn) {
-			ghostMovement.canMove = true;
-		} else {
-			// Enable the police's movement.
-			policeMovement.canMove = true;
-		}
+	public void ResetObjectList() {
+		movedObjects = new List<Transform> ();
 	}
 
+	public bool CanMoveObject(Transform obj) {
+		bool isInsideList = movedObjects.Contains (obj);
+		bool isListWithinLimit = movedObjects.Count < MAX_MOVABLE_OBJECTS;
+
+		// if list is full and object is not inside
+		if (!isListWithinLimit && !isInsideList) {
+			return false;
+		}
+		// else if list is not full and object is not inside: add object in list
+		else if (isListWithinLimit && !isInsideList) {
+			movedObjects.Add (obj);
+			return true;
+		}
+		// else if object is ALREADY inside list
+		else if (isInsideList) {
+			return true;
+		}
+		// reject everything else
+		else {
+			return false;
+		}
+	}
+		
 	/*
 	 * Checks if the game is ending. By this, we mean to say
 	 * whether the game should continue alternating turns between
@@ -76,8 +176,8 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	 * 
 	 * This DOES NOT check if the player has won or lost the game.
 	 */
-	bool isGameEnding() {
-		allTurnsUsedUp = turnsTakenPlace >= MAX_NUM_TURNS;
+	public bool isGameEnding() {
+		allTurnsUsedUp = turnsTakenPlace >= totalPermissibleTurns;
 		return allTurnsUsedUp;
 	}
 

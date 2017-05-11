@@ -7,7 +7,9 @@ using DG.Tweening;
 //detect which scene
 public class UIManager : MonoBehaviour
 {
+
     public const float TIME_LIMIT = 120;		// 2 minutes, in seconds
+
     [SerializeField]
     Image pausePnl, DialogPnl, deducePnl;
     [SerializeField]
@@ -22,7 +24,6 @@ public class UIManager : MonoBehaviour
 	public Text displayText;
 
     public List<GameObject> iconsForTime;
-
 
     private bool paused, deduce;
 
@@ -65,6 +66,7 @@ public class UIManager : MonoBehaviour
 			displayText.text = "Remaining movable objects: " + (5 - turnScript.movedObjects.Count).ToString ();
 		} else {
 			displayText.text = "Remaining time: " + (Mathf.RoundToInt(turnScript.timer)).ToString() + " seconds";
+
             setTimerIcon(turnScript.timer/ TIME_LIMIT);
 
             if (turnScript.timer <= 0) {

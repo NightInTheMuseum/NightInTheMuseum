@@ -87,14 +87,12 @@ public class MainMenuScript : MonoBehaviour {
         btn_forward.gameObject.SetActive(true);
 
     }
-
     
     public void proceedInstructionst()
     {
         pnl_Players.gameObject.SetActive(false);
         pnl_Cutscene.gameObject.SetActive(false);
         pnl_Instruct.gameObject.SetActive(true);
-
     }
 
     public void updateCutSceneForward()
@@ -142,8 +140,6 @@ public class MainMenuScript : MonoBehaviour {
         _levelHandler.setDect(currentSelection);
         refreshPlayerCount(currentSelection);
     }
-
-
 
     public void updatePlayerCountBackward()
     {
