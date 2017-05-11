@@ -7,6 +7,9 @@ using DG.Tweening;
 //detect which scene
 public class UIManager : MonoBehaviour
 {
+
+    public const float TIME_LIMIT = 120;		// 2 minutes, in seconds
+
     [SerializeField]
     Image pausePnl, DialogPnl, deducePnl;
     [SerializeField]
@@ -20,10 +23,11 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	public Text displayText;
 
+    public List<GameObject> iconsForTime;
 
     private bool paused, deduce;
 
-	private int menuState = 0;
+	private int suspect = 0;
 
 	private static UIManager _instance = null;
 
@@ -63,7 +67,9 @@ public class UIManager : MonoBehaviour
 		} else {
 			displayText.text = "Remaining time: " + (Mathf.RoundToInt(turnScript.timer)).ToString() + " seconds";
 
-			if (turnScript.timer <= 0) {
+            setTimerIcon(turnScript.timer/ TIME_LIMIT);
+
+            if (turnScript.timer <= 0) {
 				turnScript.SwapTurns ();
 			}
 		}
@@ -93,6 +99,7 @@ public class UIManager : MonoBehaviour
 		}				
 	}
 
+    
 	public void quit_btn () {
 		// check if in main menu or in-game
 		//loadLevel("SelectionScene_2");
@@ -123,6 +130,30 @@ public class UIManager : MonoBehaviour
             deduce = true;
         }
         //confirm the selection of which player is selecting
+    }
+
+    public void selectSuspect(GameObject pic)
+    {
+        suspect = (int)pic.GetComponent<Profile>().getProfile();
+        Debug.Log(suspect.ToString());
+       
+    }
+
+    public void onDeduction()
+    {
+        if (suspect == turnScript.answer)
+        {
+            //Correct, can arrest suspect
+        }
+        else
+        {
+            //Wrong, you failed!
+        }
+    }
+
+    public void setTimerIcon(float time)
+    {
+        iconsForTime[0].transform.localScale = new Vector3(iconsForTime[0].transform.localScale.x, Mathf.Clamp(time, 0f, 1f), iconsForTime[0].transform.localScale.z);
     }
 
     private void OnMouseDown()
