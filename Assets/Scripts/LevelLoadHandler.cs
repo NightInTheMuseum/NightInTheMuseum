@@ -8,6 +8,8 @@ public class LevelLoadHandler : MonoBehaviour {
 
 	int numDetectives = 0;
 
+	public PlayerPolice[] detectives;
+
 	public static LevelLoadHandler Instance
 	{
 		get { return _instance; }
@@ -37,6 +39,19 @@ public class LevelLoadHandler : MonoBehaviour {
 	public int returnDect()
 	{
 		return numDetectives;
+	}
+
+	public void initializeDetectives()
+	{
+		detectives = new PlayerPolice[numDetectives];
+		for (int p = 0; p < numDetectives; p++) {
+			PlayerPolice police = new PlayerPolice ();
+			police.CanPlay = true;
+			police.TurnsTaken = 0;
+			police.TimeLeft = 0;
+
+			detectives [p] = police;
+		}
 	}
 	
 	// Update is called once per frame
