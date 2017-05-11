@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactables
+  - PlayerGhost
+  - PlayerPolice
   layers:
   - Default
   - TransparentFX
