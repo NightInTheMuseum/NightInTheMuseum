@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	PlayerTurnControllerScript turnScript;
 	[SerializeField]
-	Text displayText;
+	public Text displayText;
 
 
     private bool paused, deduce;
@@ -103,12 +103,14 @@ public class UIManager : MonoBehaviour
     public void deduce_btn() {
         if (deduce)
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(deducePnl.rectTransform.DOLocalMoveY(-1050, 1.0f, false));
+			if (!turnScript.isGameEnding ()) {
+				Sequence sequence = DOTween.Sequence ();
+				sequence.Append (deducePnl.rectTransform.DOLocalMoveY (-1050, 1.0f, false));
 
-            Time.timeScale = 1.0f;
-            deduce = false;
-            deducePnl.gameObject.SetActive(false);
+				Time.timeScale = 1.0f;
+				deduce = false;
+				deducePnl.gameObject.SetActive (false);
+			}
         }
         else
         {
@@ -122,6 +124,7 @@ public class UIManager : MonoBehaviour
         }
         //confirm the selection of which player is selecting
     }
+
     private void OnMouseDown()
     {
         Notifier.GetComponentInChildren<NotificationManager>().NotifyText("Looked at Profile");
