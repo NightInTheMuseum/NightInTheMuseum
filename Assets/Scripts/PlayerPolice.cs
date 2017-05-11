@@ -8,6 +8,7 @@ public class PlayerPolice
 	private bool canPlay;
 	private int turnsTaken;
 	private float timeLeft;
+	private bool hasWon;
 
 	public bool CanPlay
 	{
@@ -21,6 +22,17 @@ public class PlayerPolice
 		}
 	}
 
+	public bool HasWon
+	{
+		get
+		{
+			return hasWon;
+		}
+		set
+		{
+			hasWon = value;
+		}
+	}
 
 	public int TurnsTaken
 	{

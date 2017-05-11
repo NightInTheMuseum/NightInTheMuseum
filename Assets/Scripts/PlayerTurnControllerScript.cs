@@ -65,10 +65,6 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			if (!RoomTransitionScript.isPaused) {
 				UIManager.Instance.pause_btn ();
 			}
-		} else if (Input.GetKeyDown (KeyCode.Escape)) {
-			if (RoomTransitionScript.isPaused) {
-				UIManager.Instance.pause_btn ();
-			}
 		}
 		if (!isGhostTurn) {
 			timer -= Time.deltaTime;
