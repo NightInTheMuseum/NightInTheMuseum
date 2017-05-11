@@ -12,12 +12,18 @@ public class MainMenuScript : MonoBehaviour {
     Image pnl_C1, pnl_C2, pnl_C3;
 
     [SerializeField]
-    Image pnl_MainMenu, pnl_Fader, pnl_Cutscene;
+    Image pnl_MainMenu, pnl_Fader, pnl_Cutscene, pnl_Players;
+
+    [SerializeField]
+    Text numOfDetectives;
 
     [SerializeField]
     List<Sprite> cutscenes;
 
-    int currentCutscene = 0;
+    [SerializeField]
+    LevelLoadHandler _levelHandler;
+
+    int currentCutscene = 0, currentSelection = 2;
 
 
     void Awake()
@@ -35,7 +41,7 @@ public class MainMenuScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        numOfDetectives.text = currentSelection.ToString();
     }
 
     public void LoadProperLevel(string s)
@@ -64,12 +70,19 @@ public class MainMenuScript : MonoBehaviour {
 
     public void proceedCutScene()
     {
-        pnl_MainMenu.gameObject.SetActive(false);
+        pnl_Players.gameObject.SetActive(false);
         pnl_Cutscene.gameObject.SetActive(true);
         pnl_C1.gameObject.SetActive(true);
         btn_play.gameObject.SetActive(false);
         btn_back.gameObject.SetActive(false);
         btn_forward.gameObject.SetActive(true);
+
+    }
+
+    public void proceedPlayersSelect()
+    {
+        pnl_MainMenu.gameObject.SetActive(false);
+        pnl_Players.gameObject.SetActive(true);
 
     }
 
@@ -105,23 +118,29 @@ public class MainMenuScript : MonoBehaviour {
 
     public void refreshCutscene(int i)
     {
-        /*pnl_C1.gameObject.SetActive(false);
-        pnl_C2.gameObject.SetActive(false);
-        pnl_C3.gameObject.SetActive(false);
-        switch (i)
-        {
-            case 0:
-                pnl_C1.gameObject.SetActive(true);
-                break;
-            case 1:
-                pnl_C2.gameObject.SetActive(true);
-                break;
-            case 2:
-                pnl_C3.gameObject.SetActive(true);
-                break;
-        }*/
-
         pnl_C1.gameObject.GetComponent<Image>().sprite = cutscenes[currentCutscene];
+    }
+
+    public void updatePlayerCountForward()
+    {
+        currentSelection++;
+        if (currentSelection >= 5)
+        {
+            currentSelection = 2;
+        }
+        _levelHandler.setDect(currentSelection);
+    }
+
+
+
+    public void updatePlayerCountBackward()
+    {
+        currentSelection--;
+        if (currentSelection < 2)
+        {
+            currentSelection = 4;
+        }
+        _levelHandler.setDect(currentSelection);
     }
 
 }

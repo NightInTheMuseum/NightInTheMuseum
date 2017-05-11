@@ -26,8 +26,19 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	private int totalPermissibleTurns;
 	private bool hasCorrectGuess;
 	private bool allTurnsUsedUp;
+    LevelLoadHandler _levelHandler;
 
-	void Start () {
+    private void Awake()
+    {
+        _levelHandler = FindObjectOfType<LevelLoadHandler>();
+
+        if (_levelHandler != null)
+        {
+            numDetectives = _levelHandler.returnDect() - 1;
+            Destroy(_levelHandler.gameObject);
+        }
+    }
+    void Start () {
 		movedObjects = new List<Transform>();
 		totalPermissibleTurns = (numDetectives + 1) * MAX_NUM_TURNS_PER_PLAYER;
 		timer = TIME_LIMIT;
