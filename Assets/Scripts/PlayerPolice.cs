@@ -46,7 +46,7 @@ public class PlayerPolice
 		}
 	}
 
-	public PlayerPolice GetWinner(PlayerPolice a, PlayerPolice b)
+	public static PlayerPolice GetWinner(PlayerPolice a, PlayerPolice b)
 	{
 		if (a.TurnsTaken < b.TurnsTaken) {
 			return a;
