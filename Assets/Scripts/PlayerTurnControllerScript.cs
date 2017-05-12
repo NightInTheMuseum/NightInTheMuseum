@@ -48,7 +48,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
             numDetectives = _levelHandler.returnDect() - 1;
 			_levelHandler.initializeDetectives();
 
-            Destroy(_levelHandler.gameObject);
+            //Destroy(_levelHandler.gameObject);
         }
     }
 

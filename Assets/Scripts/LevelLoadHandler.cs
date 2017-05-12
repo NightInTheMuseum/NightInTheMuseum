@@ -49,6 +49,7 @@ public class LevelLoadHandler : MonoBehaviour {
 			police.CanPlay = true;
 			police.TurnsTaken = 0;
 			police.TimeLeft = 0;
+			police.Id = p + 1;
 
 			detectives [p] = police;
 		}
