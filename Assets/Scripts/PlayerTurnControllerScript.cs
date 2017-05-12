@@ -41,7 +41,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
     private void Awake()
     {
         _levelHandler = FindObjectOfType<LevelLoadHandler>();
-        answer = 2;//Mathf.FloorToInt(Random.Range (1, 4));
+        answer = Mathf.FloorToInt(Random.Range (1, 4));
 
         if (_levelHandler != null)
         {
@@ -73,6 +73,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			timer -= Time.deltaTime;
 		} else {
 			solutionText.enabled = true;
+			solutionText.text = "Suspect #" + answer + " is the murderer.";
 		}
         if (isGameEnding())
         {

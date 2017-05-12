@@ -378,7 +378,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5cc5e4cbcad4b97488148b6efdf6a7ec, type: 3}
   - {fileID: 21300000, guid: 29a565afef7ff0747973f54cb647d000, type: 3}
   _winnerHolder: {fileID: 356578978}
-  pnl_MainMenu: {fileID: 0}
+  pnl_MainMenu: {fileID: 616825427}
   _levelHandler: {fileID: 0}
 --- !u!1 &356578977
 GameObject:

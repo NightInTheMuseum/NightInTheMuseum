@@ -27,6 +27,7 @@ public class GameOverScript : MonoBehaviour
         {
             sotin();
             refreshWinscene();
+			Destroy (_levelHandler);
         }
     }
 
@@ -38,7 +39,7 @@ public class GameOverScript : MonoBehaviour
     {
         if (p != 0)
         {
-            _winnerHolder.gameObject.GetComponent<Image>().sprite = winner[p-1];
+            _winnerHolder.gameObject.GetComponent<Image>().sprite = winner[p];
         }
         else
         {
@@ -76,6 +77,7 @@ public class GameOverScript : MonoBehaviour
                 p = PlayerPolice.GetWinner(_levelHandler.detectives[p-1], _levelHandler.detectives[2]);
             }
         }
+		print (p);
     }
 }
 
