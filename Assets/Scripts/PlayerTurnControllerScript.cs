@@ -116,18 +116,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 
 		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_TRANSPARENT, RoomTransitionScript.WHITE_OPAQUE, 0.5f));
 		if (isGameEnding ()) {
-			// set deduction screen to be active
-			RoomTransitionScript.isPaused = true;		// quickhack to disable all room transitions at this stage
-			UIManager.Instance.displayText.enabled = false;
-			GameObject.Find ("Scroll View").SetActive (false);
-			GameObject.Find ("exit_btn").SetActive (false);
-			ghost.enabled = false;
-			for (int i = 0; i < numDetectives; i++) {
-				detectiveIcons [i].enabled = false;
-			}
-			UIManager.Instance.profile_btn();
-			GameObject.Find ("back_btn").SetActive (false);
-            //GameObject.Find("arrest_btn").SetActive(false);
+			SceneManager.LoadScene("GameOver");
         }
 		Camera[] allCameras = Camera.allCameras;
 		print (allCameras);
