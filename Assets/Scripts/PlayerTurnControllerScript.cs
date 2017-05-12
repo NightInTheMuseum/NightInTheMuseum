@@ -28,18 +28,19 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	public Sprite detectiveNormal;
 	public Sprite detectiveActive;
 	public Canvas uiPrefabCanvas;
+	public Text solutionText;
 
-	public int answer = 2;		// for storing the killer solution
-	public bool hasCorrectGuess;
+	public int answer;		// for storing the killer solution
 
-	private int turnId;
+	public int turnId;
 	private int totalPermissibleTurns;
 	private bool allTurnsUsedUp;
-    LevelLoadHandler _levelHandler;
+    public LevelLoadHandler _levelHandler;
 
     private void Awake()
     {
         _levelHandler = FindObjectOfType<LevelLoadHandler>();
+		answer = Mathf.FloorToInt(Random.Range (1, 4));
 
         if (_levelHandler != null)
         {
@@ -67,7 +68,10 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			}
 		}
 		if (!isGhostTurn) {
+			solutionText.enabled = false;
 			timer -= Time.deltaTime;
+		} else {
+			solutionText.enabled = true;
 		}
 	}
 
@@ -85,10 +89,21 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 		isGhostTurn = (turnId == 0);
 
 		if (isGhostTurn) {
+			bool noMoreDetectivesAvailable = true;
+			for (int i = 0; i < _levelHandler.detectives.Length; i++) {
+				noMoreDetectivesAvailable = (noMoreDetectivesAvailable && !_levelHandler.detectives [i].CanPlay);
+			}
+			if (noMoreDetectivesAvailable) {
+				// TODO: move to ending scene right away
+			}
 			ResetObjectList ();
 			ghost.sprite = ghostActive;
 		} else {
 			ghost.sprite = ghostNormal;
+			// if the player taking the turn cannot play, move to next possible player.
+			if (!_levelHandler.detectives [turnId - 1].CanPlay) {
+				SwapTurns ();
+			}
 			detectiveIcons [turnId - 1].sprite = detectiveActive;
 			timer = TIME_LIMIT;
 		}
@@ -118,10 +133,6 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 		uiPrefabCanvas.worldCamera = Camera.main;
 		Camera.main.enabled = true;
 		StartCoroutine(FadeScreen (RoomTransitionScript.WHITE_OPAQUE, RoomTransitionScript.WHITE_TRANSPARENT, 0.5f));
-	}
-
-	public void ShowDetectiveTurn() {
-		// TODO: light up detective icon based on turnId.
 	}
 
 	// Performs the fade-screen effect using a coroutine.
@@ -181,19 +192,17 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 		return allTurnsUsedUp;
 	}
 
-	// Handles the endings depending on whether the player has
-	// made the correct guess to win the game or not.
-	// TODO: implement this
-	void checkHasPlayerWon() {
-		// if a correct guess is made, the game ends immediately with a win
-		if (hasCorrectGuess) {
-			// TODO: show winning cutscene(s)
-		} else {
-			// if all turns are used up, AND player still makes a wrong guess
-			if (isGameEnding () && !hasCorrectGuess) {
-				// TODO: show game-over cutscene
-			}
-			// else, the game continues as usual
-		}
+	public void MakeCorrectGuessForCurrentPlayer() {
+		PlayerPolice p = _levelHandler.detectives[turnId];
+		p.CanPlay = false;
+		p.TurnsTaken += 1;
+		p.TimeLeft = timer;
+		p.HasWon = true;
+	}
+
+	public void MakeWrongGuessForCurrentPlayer() {
+		PlayerPolice p = _levelHandler.detectives[turnId];
+		p.CanPlay = false;
+		p.HasWon = false;
 	}
 }
