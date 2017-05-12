@@ -43,8 +43,8 @@ public class LevelLoadHandler : MonoBehaviour {
 
 	public void initializeDetectives()
 	{
-		detectives = new PlayerPolice[numDetectives];
-		for (int p = 0; p < numDetectives; p++) {
+		detectives = new PlayerPolice[numDetectives-1];
+		for (int p = 0; p < numDetectives-1; p++) {
 			PlayerPolice police = new PlayerPolice ();
 			police.CanPlay = true;
 			police.TurnsTaken = 0;
