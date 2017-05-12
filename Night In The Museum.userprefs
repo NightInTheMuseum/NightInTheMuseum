@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\RoomEnterScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ObjectInteraction.cs">
     <Files>
-      <File FileName="Assets\Scripts\RoomEnterScript.cs" Line="45" Column="37" />
-      <File FileName="Assets\Scripts\PlayerTurnControllerScript.cs" Line="35" Column="34" />
-      <File FileName="Assets\Scripts\CameraFollowScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerTurnControllerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\OutlineEffect\Outline.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ObjectInteraction.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

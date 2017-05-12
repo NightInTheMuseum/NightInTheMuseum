@@ -49,7 +49,7 @@ namespace cakeslice
         }
 
         void Update() {
-            if (thisCamera.enabled == true && !isHighlighted) {
+            /*if (thisCamera.enabled == true && !isHighlighted) {
                 isHighlighted = true;
                 IEnumerable<OutlineEffect> effects = Camera.allCameras.AsEnumerable()
                 .Select(c => c.GetComponent<OutlineEffect>())
@@ -60,7 +60,7 @@ namespace cakeslice
                 }
             } else if (thisCamera.enabled == false) {
                 isHighlighted = false;
-            }
+            }*/
         }
 
         void OnEnable()
