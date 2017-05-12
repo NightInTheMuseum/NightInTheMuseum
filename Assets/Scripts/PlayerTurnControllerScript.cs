@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerTurnControllerScript : MonoBehaviour {
@@ -99,7 +100,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 				noMoreDetectivesAvailable = (noMoreDetectivesAvailable && !_levelHandler.detectives [i].CanPlay);
 			}
 			if (noMoreDetectivesAvailable) {
-				// TODO: move to ending scene right away
+				SceneManager.LoadScene ("GameOver");
 			}
 			ResetObjectList ();
 			ghost.sprite = ghostActive;
