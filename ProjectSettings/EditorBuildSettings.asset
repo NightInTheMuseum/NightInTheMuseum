@@ -14,3 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ObjectInteractionTest.unity
     guid: 3085abecce95416409b50a5e77b51a8d
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: aa1c8ba586d98bd4dba6094863cf197a

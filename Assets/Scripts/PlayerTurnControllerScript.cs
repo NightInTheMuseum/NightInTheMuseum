@@ -28,6 +28,8 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	public Sprite ghostActive;
 	public Sprite detectiveNormal;
 	public Sprite detectiveActive;
+	public Sprite detectivePass;
+	public Sprite detectiveFail;
 	public Canvas uiPrefabCanvas;
 	public Text solutionText;
 
@@ -89,7 +91,9 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			p.TurnsTaken += 1;
 			p.TimeLeft = timer;
 			print ("Detective " + turnId.ToString() + ": Turns taken = " + p.TurnsTaken.ToString() + ", Time left = " + p.TimeLeft.ToString());
-			detectiveIcons [turnId - 1].sprite = detectiveNormal;
+			if (_levelHandler.detectives[turnId - 1].CanPlay) {
+				detectiveIcons [turnId - 1].sprite = detectiveNormal;
+			}
 		}
 		turnsTakenPlace += 1;
 		turnId = turnsTakenPlace % (numDetectives + 1);
@@ -193,6 +197,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 
 	public void MakeCorrectGuessForCurrentPlayer() {
 		PlayerPolice p = _levelHandler.detectives[turnId-1];
+		detectiveIcons [turnId - 1].sprite = detectivePass;
 		p.CanPlay = false;
 		//p.TurnsTaken += 1;
 		//p.TimeLeft = timer;
@@ -205,6 +210,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 
 	public void MakeWrongGuessForCurrentPlayer() {
 		PlayerPolice p = _levelHandler.detectives[turnId-1];
+		detectiveIcons [turnId - 1].sprite = detectiveFail;
 		p.CanPlay = false;
 		p.HasWon = false;
         if (turnsTakenPlace < totalPermissibleTurns)
