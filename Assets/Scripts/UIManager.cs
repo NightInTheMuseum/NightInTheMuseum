@@ -210,17 +210,21 @@ public class UIManager : MonoBehaviour
 
     public void onDeduction()
     {
+        print(suspect+"sus");
+        print(turnScript.answer + "ans");
         if (suspect == turnScript.answer)
         {
+            print("correct");
             //Correct, can arrest suspect
 			// TODO: mark the detective with correct guess as 'cannot play' and 'has won'
 			turnScript.MakeCorrectGuessForCurrentPlayer();
         }
         else
         {
+            print("wrong");
             //Wrong, you failed!
-			// TODO: mark the detective with wrong guess as 'cannot play' and 'did not win'
-			turnScript.MakeWrongGuessForCurrentPlayer();
+            // TODO: mark the detective with wrong guess as 'cannot play' and 'did not win'
+            turnScript.MakeWrongGuessForCurrentPlayer();
         }
         profile_btn();
     }

@@ -41,7 +41,7 @@ public class PlayerTurnControllerScript : MonoBehaviour {
     private void Awake()
     {
         _levelHandler = FindObjectOfType<LevelLoadHandler>();
-		answer = Mathf.FloorToInt(Random.Range (1, 4));
+        answer = 2;//Mathf.FloorToInt(Random.Range (1, 4));
 
         if (_levelHandler != null)
         {
@@ -93,13 +93,15 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 		turnsTakenPlace += 1;
 		turnId = turnsTakenPlace % (numDetectives + 1);
 		isGhostTurn = (turnId == 0);
-
+        print(turnId+"turn");
 		if (isGhostTurn) {
 			bool noMoreDetectivesAvailable = true;
 			for (int i = 0; i < _levelHandler.detectives.Length; i++) {
 				noMoreDetectivesAvailable = (noMoreDetectivesAvailable && !_levelHandler.detectives [i].CanPlay);
-			}
-			if (noMoreDetectivesAvailable) {
+                print(_levelHandler.detectives[i].CanPlay + " D " + i);
+            }
+            print(noMoreDetectivesAvailable + "dect");
+            if (noMoreDetectivesAvailable) { 
 				SceneManager.LoadScene ("GameOver");
 			}
 			ResetObjectList ();
