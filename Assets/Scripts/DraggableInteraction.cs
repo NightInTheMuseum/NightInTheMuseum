@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using cakeslice;
 
 public class DraggableInteraction : MonoBehaviour {
+
+    private static int currentSortingOrder = 5;
 
 	[SerializeField]
 	private float boundaryX = 8.9f;
@@ -19,6 +22,8 @@ public class DraggableInteraction : MonoBehaviour {
     private bool dragging = false;
     private float distance;
 
+	private bool isMoved = false;
+
     void Start() {
         thisRigidbody = this.GetComponent<Rigidbody2D>();
     }
@@ -27,6 +32,10 @@ public class DraggableInteraction : MonoBehaviour {
 		if (turnScript.CanMoveObject(transform) && turnScript.isGhostTurn) {
 			distance = Vector3.Distance(transform.position, targetCamera.transform.position);
 			dragging = true;
+            this.GetComponent<Outline>().color = 1;
+            currentSortingOrder++;
+            this.GetComponent<SpriteRenderer>().sortingOrder = currentSortingOrder;
+			isMoved = true;
 		}
     }
 
@@ -52,4 +61,15 @@ public class DraggableInteraction : MonoBehaviour {
 		currentY = Mathf.Clamp (currentY, -boundaryY, boundaryY);
 		transform.localPosition = new Vector2 (currentX, currentY);
 	}
+
+	void OnMouseEnter() {
+		GetComponent<Outline> ().enabled = true;
+	}
+
+	void OnMouseExit () {
+		if (!isMoved) {
+			GetComponent<Outline> ().enabled = false;
+		}
+	}
+
 }

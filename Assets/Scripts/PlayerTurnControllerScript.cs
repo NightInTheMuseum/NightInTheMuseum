@@ -73,10 +73,15 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 		} else {
 			solutionText.enabled = true;
 		}
+        if (isGameEnding())
+        {
+            solutionText.enabled = false;
+        }
 	}
 
 	// Changes the turn to the other player.
 	public void SwapTurns () {
+       
 		if (turnId > 0) {
 			PlayerPolice p = _levelHandler.detectives [turnId - 1];
 			p.TurnsTaken += 1;
@@ -119,9 +124,10 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 			for (int i = 0; i < numDetectives; i++) {
 				detectiveIcons [i].enabled = false;
 			}
-			UIManager.Instance.deduce_btn();
+			UIManager.Instance.profile_btn();
 			GameObject.Find ("back_btn").SetActive (false);
-		}
+            //GameObject.Find("arrest_btn").SetActive(false);
+        }
 		Camera[] allCameras = Camera.allCameras;
 		print (allCameras);
 		for (int i = 0; i < allCameras.Length; i++) {
@@ -193,16 +199,24 @@ public class PlayerTurnControllerScript : MonoBehaviour {
 	}
 
 	public void MakeCorrectGuessForCurrentPlayer() {
-		PlayerPolice p = _levelHandler.detectives[turnId];
+		PlayerPolice p = _levelHandler.detectives[turnId-1];
 		p.CanPlay = false;
-		p.TurnsTaken += 1;
-		p.TimeLeft = timer;
+		//p.TurnsTaken += 1;
+		//p.TimeLeft = timer;
 		p.HasWon = true;
+        if (turnsTakenPlace < totalPermissibleTurns)
+        {
+            SwapTurns();
+        }
 	}
 
 	public void MakeWrongGuessForCurrentPlayer() {
-		PlayerPolice p = _levelHandler.detectives[turnId];
+		PlayerPolice p = _levelHandler.detectives[turnId-1];
 		p.CanPlay = false;
 		p.HasWon = false;
-	}
+        if (turnsTakenPlace < totalPermissibleTurns)
+        {
+            SwapTurns();
+        }
+    }
 }

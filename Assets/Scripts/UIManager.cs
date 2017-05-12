@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	public Text displayText;
 	[SerializeField]
-	public Button deduceButton;
+	public Button arrest_btn;
 
     public List<GameObject> iconsForTime;
 
@@ -65,19 +65,19 @@ public class UIManager : MonoBehaviour
         paused = false;
         deduce = false;
 		viewProfile = false;
-		deduceButton.gameObject.SetActive (false);
+        arrest_btn.gameObject.SetActive (false);
     }
 
 	// Update is called once per frame
 	void Update () {
 		if (turnScript.isGhostTurn) {
-			deduceButton.gameObject.SetActive(false);
+            arrest_btn.gameObject.SetActive(false);
 			displayText.text = "Remaining movable objects: " + (5 - turnScript.movedObjects.Count).ToString ();
 		} else {
-			deduceButton.gameObject.SetActive(true);
+			//deduceButton.gameObject.SetActive(true);
 			displayText.text = "Remaining time: " + (Mathf.RoundToInt(turnScript.timer)).ToString() + " seconds";
 
-            setTimerIcon(turnScript.timer/ TIME_LIMIT);
+            //setTimerIcon(turnScript.timer/ TIME_LIMIT);
 
             if (turnScript.timer <= 0) {
 				turnScript.SwapTurns ();
@@ -109,7 +109,7 @@ public class UIManager : MonoBehaviour
 		}				
 	}
 
-	public void profile_btn () {//in-game view-profile button 
+	public void Oldprofile_btn () {//in-game view-profile button 
 		if (viewProfile) {
 			//a seperate panel is needed for both the player
 			Sequence sequence = DOTween.Sequence ();
@@ -130,8 +130,36 @@ public class UIManager : MonoBehaviour
 			RoomTransitionScript.isPaused = true;
 		}				
 	}
-    
-	public void quit_btn () {
+
+    public void profile_btn()
+    {//in-game view-profile button 
+        if (viewProfile) //for all
+        {
+            //a seperate panel is needed for both the player
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(deducePnl.rectTransform.DOLocalMoveY(-1050, 1.0f, false));
+
+            viewProfile = false;
+            deducePnl.gameObject.SetActive(false);
+            screenUI.gameObject.SetActive(true);
+            RoomTransitionScript.isPaused = false;
+        }
+        else
+        {
+            screenUI.gameObject.SetActive(false);
+            deducePnl.gameObject.SetActive(true);
+            Sequence sequence = DOTween.Sequence();
+            sequence.SetUpdate(true);
+            sequence.Append(deducePnl.rectTransform.DOLocalMoveY(0, 1.0f, false));
+
+            viewProfile = true;
+            RoomTransitionScript.isPaused = true;
+        }
+    }
+
+
+
+    public void quit_btn () {
 		// check if in main menu or in-game
 		//loadLevel("SelectionScene_2");
 		Application.Quit ();
@@ -148,7 +176,8 @@ public class UIManager : MonoBehaviour
 				Time.timeScale = 1.0f;
 				deduce = false;
 				deducePnl.gameObject.SetActive (false);
-			}
+                RoomTransitionScript.isPaused = false;
+            }
         }
         else
         {
@@ -159,15 +188,24 @@ public class UIManager : MonoBehaviour
 
             Time.timeScale = 0.0f;
             deduce = true;
+            RoomTransitionScript.isPaused = true;
         }
         //confirm the selection of which player is selecting
     }
 
     public void selectSuspect(GameObject pic)
     {
-        suspect = (int)pic.GetComponent<Profile>().getProfile();
-        Debug.Log(suspect.ToString());
-       
+        if (turnScript.isGhostTurn && !turnScript.isGameEnding())
+        {
+            arrest_btn.gameObject.SetActive(false);
+        }
+        else //if (!turnScript.isGhostTurn)
+        {
+            suspect = (int)pic.GetComponent<Profile>().getProfile();
+            Debug.Log(suspect.ToString());
+            arrest_btn.gameObject.SetActive(true);
+        }
+
     }
 
     public void onDeduction()
@@ -184,6 +222,7 @@ public class UIManager : MonoBehaviour
 			// TODO: mark the detective with wrong guess as 'cannot play' and 'did not win'
 			turnScript.MakeWrongGuessForCurrentPlayer();
         }
+        profile_btn();
     }
 
     public void setTimerIcon(float time)
