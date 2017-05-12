@@ -61,8 +61,10 @@ public class RoomTransitionScript : MonoBehaviour {
 			isChosen = true;
 
 			if (isExit) {
+				GameObject.Find ("doorClose").GetComponent<AudioSource> ().Play ();
 				ExitRoom ();
 			} else {
+				GameObject.Find ("doorOpen").GetComponent<AudioSource> ().Play ();
 				EnterRoom ();
 			}
 		}
